@@ -2,11 +2,14 @@
 # ================================================================
 #  codebase-dump.sh — AI-ready full project codebase dump
 #  Respects .gitignore | skips lock-files | skips binaries
-#  Usage:  bash codebase-dump.sh            (full project)
-#          bash codebase-dump.sh src/components  (subfolder only)
+#  Usage:  bash codebase-dump.sh                      (full project)
+#          bash codebase-dump.sh src/components       (subfolder, recursive)
+#          bash codebase-dump.sh . false              (root files only)
+#          bash codebase-dump.sh src/components false (subfolder, top-level only)
 # ================================================================
 
 TARGET_DIR="${1:-.}"
+RECURSIVE="${2:-true}"
 
 if [[ "$TARGET_DIR" == "." ]]; then
   OUTPUT="codebase-dump.txt"
@@ -24,6 +27,13 @@ if ! git rev-parse --git-dir &>/dev/null; then
 fi
 
 get_files() {
+  local prefix
+  if [[ "$TARGET_DIR" == "." ]]; then
+    prefix=""
+  else
+    prefix="${TARGET_DIR}/"
+  fi
+
   {
     git ls-files "$TARGET_DIR"
     # Uncomment next line if untracked git files needed:
@@ -32,7 +42,12 @@ get_files() {
     | sort -u \
     | grep -vE "$LOCK_RE" \
     | grep -vxF "$OUTPUT" \
-    | grep -vxF "$THIS_SCRIPT"
+    | grep -vxF "$THIS_SCRIPT" \
+    | if [[ "$RECURSIVE" == "false" ]]; then
+        grep -E "^${prefix}[^/]+$"
+      else
+        cat
+      fi
 }
 
 build_tree() {
