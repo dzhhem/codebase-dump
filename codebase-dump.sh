@@ -11,8 +11,13 @@
 TARGET_DIR="${1:-.}"
 RECURSIVE="${2:-true}"
 
-if [[ "$TARGET_DIR" == "." ]]; then
+if [[ "$TARGET_DIR" == "." && "$RECURSIVE" == "true" ]]; then
   OUTPUT="codebase-dump.txt"
+elif [[ "$TARGET_DIR" == "." && "$RECURSIVE" == "false" ]]; then
+  OUTPUT="codebase-dump_root-only.txt"
+elif [[ "$RECURSIVE" == "false" ]]; then
+  SAFE_DIR=$(echo "$TARGET_DIR" | tr '/' '_')
+  OUTPUT="codebase-dump_${SAFE_DIR}_top-only.txt"
 else
   SAFE_DIR=$(echo "$TARGET_DIR" | tr '/' '_')
   OUTPUT="codebase-dump_${SAFE_DIR}.txt"
