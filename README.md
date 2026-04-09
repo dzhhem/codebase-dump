@@ -50,5 +50,6 @@ Output: `codebase-dump_src_components-top-only.txt`
 
 Add the following to your `.gitignore` to avoid committing dump files:
 ```
-codebase-dump*.txt
+# Dumps (e.g. database dumps, codebase dumps, etc.)
+dumps/
 ```
