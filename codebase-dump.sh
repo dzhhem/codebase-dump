@@ -11,16 +11,19 @@
 TARGET_DIR="${1:-.}"
 RECURSIVE="${2:-true}"
 
+DUMPS_DIR="dumps/codebase"
+mkdir -p "$DUMPS_DIR"
+
 if [[ "$TARGET_DIR" == "." && "$RECURSIVE" == "true" ]]; then
-  OUTPUT="codebase-dump.txt"
+  OUTPUT="${DUMPS_DIR}/codebase-dump.txt"
 elif [[ "$TARGET_DIR" == "." && "$RECURSIVE" == "false" ]]; then
-  OUTPUT="codebase-dump_root-only.txt"
+  OUTPUT="${DUMPS_DIR}/codebase-dump_root-only.txt"
 elif [[ "$RECURSIVE" == "false" ]]; then
   SAFE_DIR=$(echo "$TARGET_DIR" | tr '/' '_')
-  OUTPUT="codebase-dump_${SAFE_DIR}_top-only.txt"
+  OUTPUT="${DUMPS_DIR}/codebase-dump_${SAFE_DIR}_top-only.txt"
 else
   SAFE_DIR=$(echo "$TARGET_DIR" | tr '/' '_')
-  OUTPUT="codebase-dump_${SAFE_DIR}.txt"
+  OUTPUT="${DUMPS_DIR}/codebase-dump_${SAFE_DIR}.txt"
 fi
 
 THIS_SCRIPT="$(basename "${BASH_SOURCE[0]:-$0}")"
