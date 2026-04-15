@@ -8,37 +8,38 @@
 - **Safety First:** Skips binary files and common lock-files (e.g., `package-lock.json`, `Cargo.lock`, `yarn.lock`).
 - **Visual Structure:** Generates a project tree at the beginning of the dump.
 - **Flexible Scope:** Supports recursive dumps or top-level-only analysis for both the root and any subfolder.
+- **Named Arguments:** Supports short (`-d`, `-R`) and long (`--dir`, `--no-recursive`) flags.
 
 ## Usage
 
 Ensure the script is executable:
 ```bash
-chmod +x codebase-dump.sh
+chmod +x scripts/codebase-dump.sh
 ```
 
 ### Dump the entire project
 ```bash
-bash codebase-dump.sh
+bash scripts/codebase-dump.sh
 ```
-Output: `codebase-dump.txt`
+Output: `dumps/codebase/codebase-dump.txt`
 
 ### Dump a specific subfolder (recursive)
 ```bash
-bash codebase-dump.sh src/components
+bash scripts/codebase-dump.sh -d src/components
 ```
-Output: `codebase-dump_src_components.txt`
+Output: `dumps/codebase/codebase-dump_src_components.txt`
 
 ### Dump root-level files only (non-recursive)
 ```bash
-bash codebase-dump.sh . false
+bash scripts/codebase-dump.sh --no-recursive
 ```
-Output: `codebase-dump_root-only.txt`
+Output: `dumps/codebase/codebase-dump_root-only.txt`
 
 ### Dump top-level files of a subfolder only (non-recursive)
 ```bash
-bash codebase-dump.sh src/components false
+bash scripts/codebase-dump.sh -d src/components --no-recursive
 ```
-Output: `codebase-dump_src_components-top-only.txt`
+Output: `dumps/codebase/codebase-dump_src_components_top-only.txt`
 
 ## Requirements
 
