@@ -9,6 +9,7 @@
 - **Visual Structure:** Generates a project tree at the beginning of the dump.
 - **Flexible Scope:** Supports recursive dumps or top-level-only analysis for both the root and any subfolder.
 - **Named Arguments:** Supports short (`-d`, `-R`) and long (`--dir`, `--no-recursive`) flags.
+- **Error Handling:** Exits with a non-zero code and removes the output file if the dump fails or produces an empty result.
 
 ## Usage
 
